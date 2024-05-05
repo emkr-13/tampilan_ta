@@ -1,5 +1,5 @@
-altair==5.2.0
-numpy==1.26.4
-pandas==2.2.1
-pydeck==0.8.1b0
+joblib==1.4.2
+matplotlib==3.8.4
+pandas==2.2.2
+seaborn==0.13.2
 streamlit==1.32.2
