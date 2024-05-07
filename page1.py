@@ -18,7 +18,7 @@ def page1_content():
     st.title('Teks Klasifikasi')
     st.write('Masukkan teks untuk melakukan klasifikasi sentimen:')
     text_input = st.text_area('Input Teks:')
-    model_path = './resource/logistic_regression_with_vectorizer.pkl'
+    model_path = './resource/logistic_regression_with_vectorizer_baru.pkl'
     loaded_model, loaded_vectorizer, loaded_label_encoder = load_model(model_path)
     
     if st.button('Prediksi Sentimen'):
