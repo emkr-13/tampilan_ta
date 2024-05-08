@@ -1,10 +1,16 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
-import random
 from datasets import load_dataset
 
+# Load the dataset only once
+# @st.cache(allow_output_mutation=True)
+@st.cache_data 
+def load_data():
+    dataset = load_dataset("emkr-13/Dataset_Online_News_45000")
+    return dataset['train'].to_pandas()
+
+# Function to create pie chart
 def create_pie_chart(data, title):
     counts = data.value_counts()
     fig, ax = plt.subplots()
@@ -14,6 +20,7 @@ def create_pie_chart(data, title):
     st.write("Persebaraan Data:")
     st.write(counts)
 
+# Function to plot bar chart
 def plot_bar_chart(data, xlabel, ylabel, title):
     fig, ax = plt.subplots(figsize=(10, 6))
     data.plot(kind='bar', ax=ax)
@@ -23,6 +30,7 @@ def plot_bar_chart(data, xlabel, ylabel, title):
     st.write("Persebaraan Data:")
     st.write(data)
 
+# Function to plot line chart
 def plot_line_chart(data, xlabel, ylabel, title):
     fig, ax = plt.subplots(figsize=(10, 6))
     data.plot(kind='line', ax=ax)
@@ -32,10 +40,11 @@ def plot_line_chart(data, xlabel, ylabel, title):
     st.write("Persebaraan Data:")
     st.write(data)
 
+# Main function for page 2 content
 def page2_content():
     # Load the dataset
-    dataset = load_dataset("emkr-13/Dataset_Online_News_45000")
-    data = dataset['train'].to_pandas()
+    data = load_data()
+
     st.title('Sentimen Analisis')
 
     # Display random 5 rows of the data

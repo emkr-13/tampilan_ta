@@ -40,6 +40,11 @@ def visualize_topics(model, num_topics, top_n_words, title):
         plt.xticks(rotation=45)
     plt.tight_layout()
     st.pyplot(plt)
+    
+@st.cache_data 
+def load_data():
+    dataset = load_dataset("emkr-13/Dataset_Online_News_45000")
+    return dataset['train'].to_pandas()
 
 def page3_content():
     st.title('Topik Modeling LDA dan LSA')
@@ -47,9 +52,8 @@ def page3_content():
     lda_vectorizer, lda_model = joblib.load('resource/lda_tfidf_model.pkl')
     lsa_vectorizer, lsa_model = joblib.load('resource/lsa_tfidf_model.pkl')
 
-    # Contoh penggunaan
-    dataset = load_dataset("emkr-13/Dataset_Online_News_45000")
-    data = dataset['train'].to_pandas()
+    # Load the dataset
+    data = load_data()
 
     # Jumlah topik yang diinginkan
     num_lda_topics = 1
