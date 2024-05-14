@@ -1,85 +1,64 @@
 import streamlit as st
 import pandas as pd
+import seaborn as sns
 import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+from scipy.sparse import csr_matrix
 from datasets import load_dataset
+import joblib
 
-# Load the dataset only once
-# @st.cache(allow_output_mutation=True)
+def visualize_topics(model, num_topics, top_n_words, title):
+    # Judul aplikasi
+    st.title(title)
+
+    # Menampilkan kata-kata kunci untuk setiap topik
+    st.subheader("Kata Kunci untuk Setiap Topik")
+    for idx, topic in model.print_topics(num_topics):
+        st.write(f"Topik {idx + 1}: {topic}")
+
+    # Wordcloud untuk setiap topik
+    st.subheader("Wordcloud untuk Setiap Topik")
+    plt.figure(figsize=(12, 8))
+    for i in range(num_topics):
+        plt.subplot(2, 5, i+1)
+        wordcloud = WordCloud(width=800, height=400, background_color='white').generate_from_frequencies(dict(model.show_topic(i, topn=top_n_words)))
+        plt.imshow(wordcloud, interpolation='bilinear')
+        plt.title(f'Topik {i+1}')
+        plt.axis('off')
+    plt.tight_layout()
+    st.pyplot(plt)
+
+    # Barplot untuk setiap topik
+    st.subheader("Barplot untuk Setiap Topik")
+    plt.figure(figsize=(12, 8))
+    for i in range(num_topics):
+        plt.subplot(2, 5, i+1)
+        topic_words = [word for word, _ in model.show_topic(i, topn=top_n_words)]
+        word_probs = [prob for _, prob in model.show_topic(i, topn=top_n_words)]
+        sns.barplot(x=topic_words, y=word_probs)
+        plt.title(f'Topik {i+1}')
+        plt.xticks(rotation=45)
+    plt.tight_layout()
+    st.pyplot(plt)
+    
 @st.cache_data 
 def load_data():
     dataset = load_dataset("emkr-13/Dataset_Online_News_45000")
     return dataset['train'].to_pandas()
 
-# Function to create pie chart
-def create_pie_chart(data, title):
-    counts = data.value_counts()
-    fig, ax = plt.subplots()
-    ax.pie(counts, labels=counts.index, autopct='%1.1f%%', startangle=90)
-    ax.axis('equal')
-    st.pyplot(fig)
-    st.write("Persebaraan Data:")
-    st.write(counts)
-
-# Function to plot bar chart
-def plot_bar_chart(data, xlabel, ylabel, title):
-    fig, ax = plt.subplots(figsize=(10, 6))
-    data.plot(kind='bar', ax=ax)
-    ax.set_ylabel(ylabel)
-    ax.set_xlabel(xlabel)
-    st.pyplot(fig)
-    st.write("Persebaraan Data:")
-    st.write(data)
-
-# Function to plot line chart
-def plot_line_chart(data, xlabel, ylabel, title):
-    fig, ax = plt.subplots(figsize=(10, 6))
-    data.plot(kind='line', ax=ax)
-    ax.set_ylabel(ylabel)
-    ax.set_xlabel(xlabel)
-    st.pyplot(fig)
-    st.write("Persebaraan Data:")
-    st.write(data)
-
-# Main function for page 2 content
 def page2_content():
+    st.title('Topik Modeling LDA dan LSA')
+    # Memuat kembali model dan vectorizer
+    lda_vectorizer, lda_model = joblib.load('resource/lda_tfidf_model.pkl')
+    lsa_vectorizer, lsa_model = joblib.load('resource/lsa_tfidf_model.pkl')
+
     # Load the dataset
     data = load_data()
 
-    st.title('Sentimen Analisis')
+    # Jumlah topik yang diinginkan
+    num_lda_topics = 1
+    num_lsa_topics = 2
+    top_n_words = 5  # Jumlah kata kunci untuk setiap topik
 
-    # Display random 5 rows of the data
-    st.subheader('Data 5 Random')
-    st.write(data.sample(5))
-
-    # Pie chart for news source distribution
-    st.subheader('Persebaraan Berita')
-    create_pie_chart(data['asal_berita'], 'Persebaraan Berita')
-    
-    # Pie chart for sentiment distribution
-    st.subheader('Persebaraan Sentimen')
-    create_pie_chart(data['sentimen'], 'Persebaraan Sentimen')
-    
-    # Pie chart for sentiment distribution based on news source
-    st.subheader('Persebaraan Sentimen Berdasarkan Berita')
-    selected_source = st.selectbox('Pilih Berita:', data['asal_berita'].unique())
-    filtered_data = data[data['asal_berita'] == selected_source]
-    create_pie_chart(filtered_data['sentimen'], 'Persebaraan Sentimen Berdasarkan Berita dari ' + selected_source)
-    
-    # Bar chart for sentiment distribution based on month of news date
-    data['tanggal_berita'] = pd.to_datetime(data['tanggal_berita'], format='%Y-%m-%d')
-    data['bulan'] = data['tanggal_berita'].dt.month_name()
-    sentimen_by_month = data.groupby(['bulan', 'sentimen']).size().unstack(fill_value=0)
-    st.subheader('Persebaraan Sentimen Berdasarkan Bulan')
-    plot_bar_chart(sentimen_by_month, 'Bulan', 'Frequency', 'Persebaraan Sentimen Berdasarkan Bulan')
-
-    # Bar chart for sentiment distribution based on month of news date and news source
-    sentimen_by_month_and_source = data.groupby(['bulan', 'sentimen', 'asal_berita']).size().unstack(fill_value=0)
-    st.subheader('Persebaraan Sentimen Berdasarkan Bulan dan Asal Berita')
-    plot_bar_chart(sentimen_by_month_and_source, 'Bulan', 'Frequency', 'Persebaraan Sentimen Berdasarkan Bulan dan Asal Berita')
-
-    # Line chart for sentiment distribution per day for a specific month
-    selected_month = st.selectbox('Pilih Bulan:', data['bulan'].unique())
-    filtered_data = data[data['bulan'] == selected_month]
-    sentiment_by_day = filtered_data.groupby(filtered_data['tanggal_berita'].dt.day)['sentimen'].value_counts().unstack(fill_value=0)
-    st.subheader('Persebaraan Sentimen per hari Berdasarkan Bulan ' + selected_month)
-    plot_line_chart(sentiment_by_day, 'Tangggal', 'Frequency', 'Persebaraan Sentimen per hari Berdasarkan Bulan ' + selected_month)
+    visualize_topics(lda_model, num_lda_topics, top_n_words, 'Visualisasi Topik dengan LDA')
+    visualize_topics(lsa_model, num_lsa_topics, top_n_words, 'Visualisasi Topik dengan LSA')
