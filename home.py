@@ -52,7 +52,7 @@ def home_content():
         # Load the dataset
     data = load_data()
 
-    st.subheader('Dataset Crawling Berita')
+    st.header('Dataset Crawling Berita')
     # st.write(data)
     AgGrid(data)
     st.text(f"Jumlah Baris Data = {data.shape[0]}")
@@ -60,11 +60,24 @@ def home_content():
     # Pie chart for news source distribution
     st.subheader('Persebaraan Berita')
     create_pie_chart(data['asal_berita'], 'Persebaraan Berita')
+
+
+    data['tanggal_berita'] = pd.to_datetime(data['tanggal_berita'], format='%Y-%m-%d')
+    data['bulan'] = data['tanggal_berita'].dt.month_name()
+    news_by_month = data['bulan'].value_counts().sort_index()
+    st.subheader('Persebaraan Berita Berdasarkan Bulan')
+    plot_bar_chart(news_by_month, 'Bulan', 'Frequency', 'Persebaraan Berita Berdasarkan Bulan')
     
-    st.subheader("Persebaraan Jumlah Berita berdasarkan bulan")
+    # Filtered bar chart for news distribution based on news source
+    st.subheader('Persebaraan Berita Berdasarkan Bulan dan Asal Berita')
+    selected_source = st.selectbox('Pilih Asal Berita:', data['asal_berita'].unique())
+    filtered_data = data[data['asal_berita'] == selected_source]
+    news_by_month_filtered = filtered_data['bulan'].value_counts().sort_index()
+    plot_bar_chart(news_by_month_filtered, 'Bulan', 'Frequency', 'Persebaraan Berita Berdasarkan Bulan dari ' + selected_source)
     
     
-    st.title('Sentimen Analsis')
+    
+    st.header('Sentimen Analsis')
     st.write("Sentimen analsis berdasarkan dataset yang digunakaan ")
     # Pie chart for sentiment distribution
     st.subheader('Persebaraan Sentimen')

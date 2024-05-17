@@ -9,7 +9,7 @@ import joblib
 
 def visualize_topics(model, num_topics, top_n_words, title):
     # Judul aplikasi
-    st.title(title)
+    st.header(title)
 
     # Menampilkan kata-kata kunci untuk setiap topik
     st.subheader("Kata Kunci untuk Setiap Topik")
@@ -48,6 +48,11 @@ def load_data():
 
 def page2_content():
     st.title('Topik Modeling LDA dan LSA')
+    st.markdown("""
+    \n Untuk melihat hasil coherence score batasaan jumlah topik yang digunakaan bisa di lihat pada link berikut :
+    \n Pada Menu Terdiri dari 2 topik utama yaitu LDA dan LSA dan di tampilkan kedalaam worlcoud dan bar chart 
+                """)
+    
     
     # Memuat kembali model dan vectorizer
     lda_vectorizer, lda_model = joblib.load('resource/lda_tfidf_model.pkl')
@@ -55,6 +60,20 @@ def page2_content():
 
     # Load the dataset
     data = load_data()
+    
+    
+    
+    st.header("Worlcoud Keseluruhan Data")
+    all_texts = ' '.join(data['content_clean'])
+    # Generate a word cloud image
+    wordcloud = WordCloud(width=800, height=400, background_color='white').generate(all_texts)
+
+    # Display the generated image:
+    plt.figure(figsize=(10, 5))
+    plt.imshow(wordcloud, interpolation='bilinear')
+    plt.axis('off')
+    st.pyplot(plt)  # Use st.pyplot to display the word cloud
+    
 
     # Jumlah topik yang diinginkan
     num_lda_topics = 1
