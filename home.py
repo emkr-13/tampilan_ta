@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 from datasets import load_dataset
-from st_aggrid import AgGrid
 from loguru import logger
 
 # Initialize logger
