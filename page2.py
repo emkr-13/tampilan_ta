@@ -6,6 +6,7 @@ from wordcloud import WordCloud
 from scipy.sparse import csr_matrix
 from datasets import load_dataset
 import joblib
+from loguru import logger
 
 def visualize_topics(model, num_topics, top_n_words, title):
     # Judul aplikasi
@@ -41,10 +42,17 @@ def visualize_topics(model, num_topics, top_n_words, title):
     plt.tight_layout()
     st.pyplot(plt)
     
-@st.cache_data 
+@st.cache_data
 def load_data():
-    dataset = load_dataset("emkr-13/Dataset_Berita_Indo")
-    return dataset['train'].to_pandas()
+    try:
+        logger.info("Loading dataset")
+        dataset = load_dataset("emkr-13/Dataset_Berita_Indo")
+        logger.info("Dataset loaded successfully")
+        return dataset['train'].to_pandas()
+    except Exception as e:
+        logger.error(f"Error loading dataset: {e}")
+        st.error(f"Failed to load the dataset {e}")
+        return pd.DataFrame()
 
 def page2_content():
     st.title('Topik Modeling LDA dan LSA')
