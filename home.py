@@ -60,7 +60,7 @@ def load_data():
         return data
     except Exception as e:
         logger.error(f"Error loading data: {e}")
-        st.error("Failed to load data")
+        st.error("Failed to load data {e}")
 
 def home_content():
     st.title('Selamat Datang di Sentimen Analisis dan Topik Analisis Berita')
