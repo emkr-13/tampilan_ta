@@ -49,7 +49,7 @@ def load_data():
 def page2_content():
     st.title('Topik Modeling LDA dan LSA')
     st.markdown("""
-    \n Untuk melihat hasil coherence score batasaan jumlah topik yang digunakaan bisa di lihat pada link berikut :
+    \n Untuk melihat hasil coherence score batasaan jumlah topik yang digunakaan bisa di lihat pada link berikut : https://github.com/emkr-13/model_ta/blob/main/LDA%20dan%20LSA/cara_nilai.ipynb
     \n Pada Menu Terdiri dari 2 topik utama yaitu LDA dan LSA dan di tampilkan kedalaam worlcoud dan bar chart 
                 """)
     
