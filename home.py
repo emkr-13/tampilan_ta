@@ -2,12 +2,13 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 from datasets import load_dataset
+from st_aggrid import AgGrid
 
 # Load the dataset only once
 # @st.cache(allow_output_mutation=True)
 @st.cache_data 
 def load_data():
-    dataset = load_dataset("emkr-13/Dataset_Online_News_45000")
+    dataset = load_dataset("emkr-13/Dataset_Berita_Indo")
     return dataset['train'].to_pandas()
 
 # Function to create pie chart
@@ -44,19 +45,27 @@ def plot_line_chart(data, xlabel, ylabel, title):
 def home_content():
     st.title('Selamat Datang di Sentimen Analisis dan Topik Analisis Berita')
     st.write('Selamat datang di website saya Di sini, saya menyajikan hasil skripsi saya tentang Sentimen Analisis dan Topik Analisis Berita.')
+    st.markdown("""
+    Nama\t : Emmanuel Mathew Krisna Rata\n
+    NPM\t : 200710530\n
+    """)
         # Load the dataset
     data = load_data()
 
-    st.title('Sentimen Analisis')
-
-    # Display random 5 rows of the data
-    st.subheader('Data 5 Random')
-    st.write(data.sample(5))
+    st.subheader('Dataset Crawling Berita')
+    # st.write(data)
+    AgGrid(data)
+    st.text(f"Jumlah Baris Data = {data.shape[0]}")
 
     # Pie chart for news source distribution
     st.subheader('Persebaraan Berita')
     create_pie_chart(data['asal_berita'], 'Persebaraan Berita')
     
+    st.subheader("Persebaraan Jumlah Berita berdasarkan bulan")
+    
+    
+    st.title('Sentimen Analsis')
+    st.write("Sentimen analsis berdasarkan dataset yang digunakaan ")
     # Pie chart for sentiment distribution
     st.subheader('Persebaraan Sentimen')
     create_pie_chart(data['sentimen'], 'Persebaraan Sentimen')

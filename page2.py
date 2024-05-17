@@ -43,11 +43,12 @@ def visualize_topics(model, num_topics, top_n_words, title):
     
 @st.cache_data 
 def load_data():
-    dataset = load_dataset("emkr-13/Dataset_Online_News_45000")
+    dataset = load_dataset("emkr-13/Dataset_Berita_Indo")
     return dataset['train'].to_pandas()
 
 def page2_content():
     st.title('Topik Modeling LDA dan LSA')
+    
     # Memuat kembali model dan vectorizer
     lda_vectorizer, lda_model = joblib.load('resource/lda_tfidf_model.pkl')
     lsa_vectorizer, lsa_model = joblib.load('resource/lsa_tfidf_model.pkl')
@@ -61,4 +62,5 @@ def page2_content():
     top_n_words = 5  # Jumlah kata kunci untuk setiap topik
 
     visualize_topics(lda_model, num_lda_topics, top_n_words, 'Visualisasi Topik dengan LDA')
+    
     visualize_topics(lsa_model, num_lsa_topics, top_n_words, 'Visualisasi Topik dengan LSA')
