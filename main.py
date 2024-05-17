@@ -1,6 +1,7 @@
 import os.path
 from datasets import load_dataset
 import pandas as pd
+from loguru import logger
 
 # Function to download dataset if not exist
 def download_dataset(file_path):
@@ -9,7 +10,7 @@ def download_dataset(file_path):
         dataset = load_dataset("emkr-13/Dataset_Berita_Indo")
         df = pd.DataFrame(dataset['train'])
         df.to_csv(file_path, index=False)
-        print("Dataset telah diunduh dan disimpan sebagai CSV di:", file_path)
+        logger.info("Dataset telah diunduh dan disimpan sebagai CSV di:", file_path)
 
 # Path to save CSV file
 file_path = "resource/dataset_berita_indo.csv"
