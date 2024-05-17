@@ -63,16 +63,16 @@ def page2_content():
     
     
     
-    st.header("Worlcoud Keseluruhan Data")
-    all_texts = ' '.join(data['content_clean'])
-    # Generate a word cloud image
-    wordcloud = WordCloud(width=800, height=400, background_color='white').generate(all_texts)
+    # st.header("Worlcoud Keseluruhan Data")
+    # all_texts = ' '.join(data['content_clean'])
+    # # Generate a word cloud image
+    # wordcloud = WordCloud(width=800, height=400, background_color='white').generate(all_texts)
 
-    # Display the generated image:
-    plt.figure(figsize=(10, 5))
-    plt.imshow(wordcloud, interpolation='bilinear')
-    plt.axis('off')
-    st.pyplot(plt)  # Use st.pyplot to display the word cloud
+    # # Display the generated image:
+    # plt.figure(figsize=(10, 5))
+    # plt.imshow(wordcloud, interpolation='bilinear')
+    # plt.axis('off')
+    # st.pyplot(plt)  # Use st.pyplot to display the word cloud
     
 
     # Jumlah topik yang diinginkan
