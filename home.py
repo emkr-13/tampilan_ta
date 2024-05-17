@@ -8,18 +8,6 @@ from loguru import logger
 # Initialize logger
 logger.add("app.log", rotation="500 MB")
 
-# # Load the dataset only once
-# @st.cache_data
-# def load_data():
-#     try:
-#         logger.info("Loading dataset")
-#         dataset = load_dataset("emkr-13/Dataset_Berita_Indo")
-#         logger.info("Dataset loaded successfully")
-#         return dataset['train'].to_pandas()
-#     except Exception as e:
-#         logger.error(f"Error loading dataset: {e}")
-#         st.error(f"Failed to load the dataset {e}")
-#         return pd.DataFrame()
 
 # Function to create pie chart
 def create_pie_chart(data, title):
@@ -62,6 +50,16 @@ def plot_line_chart(data, xlabel, ylabel, title):
     except Exception as e:
         logger.error(f"Error creating line chart: {e}")
         st.error("Failed to create line chart")
+        
+@st.cache_data
+def load_data():
+    try:
+        # Load the dataset
+        data = pd.read_csv('resource/dataset_berita_indo.csv')
+        return data
+    except Exception as e:
+        logger.error(f"Error loading data: {e}")
+        st.error("Failed to load data")
 
 def home_content():
     st.title('Selamat Datang di Sentimen Analisis dan Topik Analisis Berita')
@@ -73,7 +71,7 @@ def home_content():
     
     try:
         # Load the dataset
-        data = pd.read_csv('resource/dataset_berita_indo.csv')
+        data = load_data()
     
         st.header('Dataset Crawling Berita')
         AgGrid(data)
