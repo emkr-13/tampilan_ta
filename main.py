@@ -39,7 +39,7 @@ def main():
                 logger.info("Beranda page loaded successfully")
             except Exception as e:
                 logger.error(f"Error loading Beranda page: {e}")
-                st.error("Failed to load Beranda page")
+                st.error("Failed to load Beranda page {e}")
 
         elif page == 'Model Klasfikasi':
             try:
@@ -48,7 +48,7 @@ def main():
                 logger.info("Model Klasfikasi page loaded successfully")
             except Exception as e:
                 logger.error(f"Error loading Model Klasfikasi page: {e}")
-                st.error("Failed to load Model Klasfikasi page")
+                st.error("Failed to load Model Klasfikasi page {e}")
 
         elif page == 'Model LDA dan LSA':
             try:
@@ -57,7 +57,7 @@ def main():
                 logger.info("Model LDA dan LSA page loaded successfully")
             except Exception as e:
                 logger.error(f"Error loading Model LDA dan LSA page: {e}")
-                st.error("Failed to load Model LDA dan LSA page")
+                st.error("Failed to load Model LDA dan LSA page {e}")
                 
     except Exception as e:
         logger.error(f"Error in main function: {e}")
