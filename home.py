@@ -95,34 +95,34 @@ def home_content():
         news_by_month_filtered = filtered_data['bulan'].value_counts().sort_index()
         plot_bar_chart(news_by_month_filtered, 'Bulan', 'Frequency', 'Persebaraan Berita Berdasarkan Bulan dari ' + selected_source)
     
-        st.header('Sentimen Analsis')
-        st.write("Sentimen analsis berdasarkan dataset yang digunakaan ")
-        # Pie chart for sentiment distribution
-        st.subheader('Persebaraan Sentimen')
-        create_pie_chart(data['sentimen'], 'Persebaraan Sentimen')
+        # st.header('Sentimen Analsis')
+        # st.write("Sentimen analsis berdasarkan dataset yang digunakaan ")
+        # # Pie chart for sentiment distribution
+        # st.subheader('Persebaraan Sentimen')
+        # create_pie_chart(data['sentimen'], 'Persebaraan Sentimen')
         
-        # Pie chart for sentiment distribution based on news source
-        st.subheader('Persebaraan Sentimen Berdasarkan Berita')
-        selected_source = st.selectbox('Pilih Berita:', data['asal_berita'].unique(), key='select_berita')
-        filtered_data = data[data['asal_berita'] == selected_source]
-        create_pie_chart(filtered_data['sentimen'], 'Persebaraan Sentimen Berdasarkan Berita dari ' + selected_source)
+        # # Pie chart for sentiment distribution based on news source
+        # st.subheader('Persebaraan Sentimen Berdasarkan Berita')
+        # selected_source = st.selectbox('Pilih Berita:', data['asal_berita'].unique(), key='select_berita')
+        # filtered_data = data[data['asal_berita'] == selected_source]
+        # create_pie_chart(filtered_data['sentimen'], 'Persebaraan Sentimen Berdasarkan Berita dari ' + selected_source)
         
-        # Bar chart for sentiment distribution based on month of news date
-        sentimen_by_month = data.groupby(['bulan', 'sentimen']).size().unstack(fill_value=0)
-        st.subheader('Persebaraan Sentimen Berdasarkan Bulan')
-        plot_bar_chart(sentimen_by_month, 'Bulan', 'Frequency', 'Persebaraan Sentimen Berdasarkan Bulan')
+        # # Bar chart for sentiment distribution based on month of news date
+        # sentimen_by_month = data.groupby(['bulan', 'sentimen']).size().unstack(fill_value=0)
+        # st.subheader('Persebaraan Sentimen Berdasarkan Bulan')
+        # plot_bar_chart(sentimen_by_month, 'Bulan', 'Frequency', 'Persebaraan Sentimen Berdasarkan Bulan')
     
-        # Bar chart for sentiment distribution based on month of news date and news source
-        sentimen_by_month_and_source = data.groupby(['bulan', 'sentimen', 'asal_berita']).size().unstack(fill_value=0)
-        st.subheader('Persebaraan Sentimen Berdasarkan Bulan dan Asal Berita')
-        plot_bar_chart(sentimen_by_month_and_source, 'Bulan', 'Frequency', 'Persebaraan Sentimen Berdasarkan Bulan dan Asal Berita')
+        # # Bar chart for sentiment distribution based on month of news date and news source
+        # sentimen_by_month_and_source = data.groupby(['bulan', 'sentimen', 'asal_berita']).size().unstack(fill_value=0)
+        # st.subheader('Persebaraan Sentimen Berdasarkan Bulan dan Asal Berita')
+        # plot_bar_chart(sentimen_by_month_and_source, 'Bulan', 'Frequency', 'Persebaraan Sentimen Berdasarkan Bulan dan Asal Berita')
     
-        # Line chart for sentiment distribution per day for a specific month
-        selected_month = st.selectbox('Pilih Bulan:', data['bulan'].unique(), key='select_bulan')
-        filtered_data = data[data['bulan'] == selected_month]
-        sentiment_by_day = filtered_data.groupby(filtered_data['tanggal_berita'].dt.day)['sentimen'].value_counts().unstack(fill_value=0)
-        st.subheader('Persebaraan Sentimen per hari Berdasarkan Bulan ' + selected_month)
-        plot_line_chart(sentiment_by_day, 'Tangggal', 'Frequency', 'Persebaraan Sentimen per hari Berdasarkan Bulan ' + selected_month)
+        # # Line chart for sentiment distribution per day for a specific month
+        # selected_month = st.selectbox('Pilih Bulan:', data['bulan'].unique(), key='select_bulan')
+        # filtered_data = data[data['bulan'] == selected_month]
+        # sentiment_by_day = filtered_data.groupby(filtered_data['tanggal_berita'].dt.day)['sentimen'].value_counts().unstack(fill_value=0)
+        # st.subheader('Persebaraan Sentimen per hari Berdasarkan Bulan ' + selected_month)
+        # plot_line_chart(sentiment_by_day, 'Tangggal', 'Frequency', 'Persebaraan Sentimen per hari Berdasarkan Bulan ' + selected_month)
     except Exception as e:
         logger.error(f"Error in home_content: {e}")
         st.error("An error occurred while processing your request.")
