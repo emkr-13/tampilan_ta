@@ -56,6 +56,7 @@ def load_data():
     try:
         # Load the dataset
         data = pd.read_csv('resource/dataset_berita_indo.csv')
+        logger.success("data bisa di load")
         return data
     except Exception as e:
         logger.error(f"Error loading data: {e}")
