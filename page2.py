@@ -42,17 +42,17 @@ def visualize_topics(model, num_topics, top_n_words, title):
     plt.tight_layout()
     st.pyplot(plt)
     
-@st.cache_data
-def load_data():
-    try:
-        logger.info("Loading dataset")
-        dataset = load_dataset("emkr-13/Dataset_Berita_Indo")
-        logger.info("Dataset loaded successfully")
-        return dataset['train'].to_pandas()
-    except Exception as e:
-        logger.error(f"Error loading dataset: {e}")
-        st.error(f"Failed to load the dataset {e}")
-        return pd.DataFrame()
+# @st.cache_data
+# def load_data():
+#     try:
+#         logger.info("Loading dataset")
+#         dataset = load_dataset("emkr-13/Dataset_Berita_Indo")
+#         logger.info("Dataset loaded successfully")
+#         return dataset['train'].to_pandas()
+#     except Exception as e:
+#         logger.error(f"Error loading dataset: {e}")
+#         st.error(f"Failed to load the dataset {e}")
+#         return pd.DataFrame()
 
 def page2_content():
     st.title('Topik Modeling LDA dan LSA')
@@ -67,7 +67,7 @@ def page2_content():
     lsa_vectorizer, lsa_model = joblib.load('resource/lsa_tfidf_model.pkl')
 
     # Load the dataset
-    data = load_data()
+    data = pd.read_csv('resource/dataset_berita_indo.csv')
     
     
     

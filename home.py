@@ -8,18 +8,18 @@ from loguru import logger
 # Initialize logger
 logger.add("app.log", rotation="500 MB")
 
-# Load the dataset only once
-@st.cache_data
-def load_data():
-    try:
-        logger.info("Loading dataset")
-        dataset = load_dataset("emkr-13/Dataset_Berita_Indo")
-        logger.info("Dataset loaded successfully")
-        return dataset['train'].to_pandas()
-    except Exception as e:
-        logger.error(f"Error loading dataset: {e}")
-        st.error(f"Failed to load the dataset {e}")
-        return pd.DataFrame()
+# # Load the dataset only once
+# @st.cache_data
+# def load_data():
+#     try:
+#         logger.info("Loading dataset")
+#         dataset = load_dataset("emkr-13/Dataset_Berita_Indo")
+#         logger.info("Dataset loaded successfully")
+#         return dataset['train'].to_pandas()
+#     except Exception as e:
+#         logger.error(f"Error loading dataset: {e}")
+#         st.error(f"Failed to load the dataset {e}")
+#         return pd.DataFrame()
 
 # Function to create pie chart
 def create_pie_chart(data, title):
@@ -73,7 +73,7 @@ def home_content():
     
     try:
         # Load the dataset
-        data = load_data()
+        data = pd.read_csv('resource/dataset_berita_indo.csv')
     
         st.header('Dataset Crawling Berita')
         AgGrid(data)

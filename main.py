@@ -1,3 +1,22 @@
+import os.path
+from datasets import load_dataset
+import pandas as pd
+
+# Function to download dataset if not exist
+def download_dataset(file_path):
+    # Muat dataset jika belum ada
+    if not os.path.exists(file_path):
+        dataset = load_dataset("emkr-13/Dataset_Berita_Indo")
+        df = pd.DataFrame(dataset['train'])
+        df.to_csv(file_path, index=False)
+        print("Dataset telah diunduh dan disimpan sebagai CSV di:", file_path)
+
+# Path to save CSV file
+file_path = "resource/dataset_berita_indo.csv"
+
+# Download dataset if not exist
+download_dataset(file_path)
+
 import streamlit as st
 from home import home_content
 from page1 import page1_content
