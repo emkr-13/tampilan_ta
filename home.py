@@ -75,7 +75,7 @@ def home_content():
         data = load_data()
     
         st.header('Dataset Crawling Berita')
-        AgGrid(data)
+        # st.write(data.random(10))
         st.text(f"Jumlah Baris Data = {data.shape[0]}")
     
         # Pie chart for news source distribution
