@@ -18,7 +18,7 @@ def load_data():
         return dataset['train'].to_pandas()
     except Exception as e:
         logger.error(f"Error loading dataset: {e}")
-        st.error("Failed to load the dataset")
+        st.error(f"Failed to load the dataset {e}")
         return pd.DataFrame()
 
 # Function to create pie chart
