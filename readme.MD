@@ -1,4 +1,4 @@
-# Streamlit
+# Tampilan TA 
 
 Repo merupakaan hasil implentasi dari model yang di gunakaan pada repo https://github.com/emkr-13/model_ta yang dimana terdiri dataset yang bisa di lihat pada huggeface di link berikut https://huggingface.co/datasets/emkr-13/Dataset_Berita_Indo. Dimana ini merupakan tampilan ahkir dari tugas ahkir punya saya itu aja mengunakaan streamlit sebagai framework ui tampilan
 
