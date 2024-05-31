@@ -76,7 +76,7 @@ def home_content():
         st.header('Dataset Crawling Berita')
         # st.write(data.random(10))
         st.markdown("""
-            \n Di karena dataset load data yang besar maka tidak menampilkan dataset maka dari untuk melihat dataset pada huggeface di link berikut : https://huggingface.co/datasets/emkr-13/Dataset_Berita_Indo
+            \n Di karena dataset load data yang besar maka tidak menampilkan dataset maka dari untuk melihat dataset pada huggeface di link berikut: [link](https://huggingface.co/datasets/emkr-13/Dataset_Berita_Indo)
                     """)
         st.text(f"Jumlah Baris Data = {data.shape[0]}")
     
