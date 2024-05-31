@@ -19,12 +19,12 @@ def page1_content():
     st.title('Teks Klasifikasi')
     st.markdown("""
     List Berita yang di buat model teks yang dapat digunakan:
-    1. Berita Detik link berikut : https://www.detik.com/.
-    2. Berita Kompas link berikut : https://www.kompas.com/.
-    3. Berita CNN link berikut : https://www.cnnindonesia.com/.
-    dan bisa mengunakaan berita lain juga selain di atas 
+    1. Berita Detik link berikut : https://www.detik.com.
+    2. Berita Kompas link berikut : https://www.kompas.com.
+    3. Berita CNN link berikut : https://www.cnnindonesia.com.\n
+    Bisa mengunakaan berita lain juga selain di atas 
     Untuk mencari teks lain bisa mencari lewat portal berita yang untuk melihat hasil prediksi sentimen.  
-    Untuk melihat proses pelatihan model bisa melihat link berikut: [link](https://github.com/emkr-13/model_ta/tree/main/Sentimen)
+    Melihat proses pelatihan model bisa melihat link berikut: [link](https://github.com/emkr-13/model_ta/tree/main/Sentimen)
     """)
     st.write('Masukkan teks untuk melakukan klasifikasi sentimen:')
     text_input = st.text_area('Input Teks:')
