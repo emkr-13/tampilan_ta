@@ -1,17 +1,27 @@
 import streamlit as st
 import joblib
 import time
+from scipy.sparse import hstack
 
 def load_model(model_path):
     loaded_model_data = joblib.load(model_path)
     loaded_model = loaded_model_data['model']
-    loaded_vectorizer = loaded_model_data['vectorizer']
+    tfidf_vectorizer = loaded_model_data['tfidf_vectorizer']
+    count_vectorizer = loaded_model_data['count_vectorizer']
     loaded_label_encoder = loaded_model_data['label_encoder']
-    return loaded_model, loaded_vectorizer, loaded_label_encoder
+    return loaded_model, tfidf_vectorizer,count_vectorizer, loaded_label_encoder
 
-def predict_sentiment(model, vectorizer, label_encoder, text_data):
-    new_data_features = vectorizer.transform(text_data)
-    predictions = model.predict_proba(new_data_features)[0]
+
+def predict_sentiment(model, tfidf_vectorizer, count_vectorizer, label_encoder, text_data):
+    # Transform the new data using the loaded vectorizers
+    tfidf_features = tfidf_vectorizer.transform(text_data)
+    count_features = count_vectorizer.transform(text_data)
+    
+    # Combine the features
+    combined_features = hstack([tfidf_features, count_features])
+    
+    # Make predictions
+    predictions = model.predict_proba(combined_features)[0]
     predicted_sentiments = {label: f"{p * 100:.2f}%" for label, p in zip(label_encoder.classes_, predictions)}
     return predicted_sentiments
 
@@ -28,14 +38,14 @@ def page1_content():
     """)
     st.write('Masukkan teks untuk melakukan klasifikasi sentimen:')
     text_input = st.text_area('Input Teks:')
-    model_path = 'resource/model_sentimen_lr.pkl'
-    loaded_model, loaded_vectorizer, loaded_label_encoder = load_model(model_path)
+    model_path = 'resource/model_sentimen_svm.pkl'
+    loaded_model, tfidf_vectorizer,count_vectorizer, loaded_label_encoder = load_model(model_path)
     
     uji_test = st.button('Prediksi Sentimen')
     if uji_test:
         if text_input.strip():
             new_data = [text_input]
-            predicted_sentiments = predict_sentiment(loaded_model, loaded_vectorizer, loaded_label_encoder, new_data)
+            predicted_sentiments = predict_sentiment(loaded_model,  tfidf_vectorizer,count_vectorizer, loaded_label_encoder, new_data)
             with st.spinner('Wait for it...'):
                 time.sleep(2)
                 st.balloons()

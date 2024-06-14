@@ -63,8 +63,8 @@ def page2_content():
     
     
     # Memuat kembali model dan vectorizer
-    lda_vectorizer, lda_model = joblib.load('resource/lda_tfidf_model.pkl')
-    lsa_vectorizer, lsa_model = joblib.load('resource/lsa_tfidf_model.pkl')
+    lda_vectorizer, lda_model = joblib.load('resource/lda_tfidf_model_baru.pkl')
+    lsa_vectorizer, lsa_model = joblib.load('resource/lsa_tfidf_model_baru.pkl')
 
     # Load the dataset
     data = load_data()
@@ -85,7 +85,7 @@ def page2_content():
 
     # Jumlah topik yang diinginkan
     num_lda_topics = 1
-    num_lsa_topics = 2
+    num_lsa_topics = 1
     top_n_words = 5  # Jumlah kata kunci untuk setiap topik
 
     visualize_topics(lda_model, num_lda_topics, top_n_words, 'Visualisasi Topik dengan LDA')

@@ -7,13 +7,13 @@ from loguru import logger
 def download_dataset(file_path):
     # Muat dataset jika belum ada
     if not os.path.exists(file_path):
-        dataset = load_dataset("emkr-13/Dataset_Berita_Indo")
+        dataset = load_dataset("emkr-13/berita_pemilu_2024")
         df = pd.DataFrame(dataset['train'])
         df.to_csv(file_path, index=False)
         logger.info("Dataset telah diunduh dan disimpan sebagai CSV di:", file_path)
 
 # Path to save CSV file
-file_path = "resource/dataset_berita_indo.csv"
+file_path = "resource/dataset_pemilu_2024.csv"
 
 # Download dataset if not exist
 download_dataset(file_path)
