@@ -46,7 +46,7 @@ def visualize_topics(model, num_topics, top_n_words, title):
 def load_data():
     try:
         # Load the dataset
-        data = pd.read_csv('resource/dataset_berita_indo.csv')
+        data = pd.read_csv('resource/dataset_pemilu_2024.csv')
         logger.success("data bisa di load")
         return data
     except Exception as e:
