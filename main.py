@@ -1,22 +1,21 @@
 import os.path
-from datasets import load_dataset
 import pandas as pd
 from loguru import logger
 
 # Function to download dataset if not exist
-def download_dataset(file_path):
-    # Muat dataset jika belum ada
-    if not os.path.exists(file_path):
-        dataset = load_dataset("emkr-13/berita_pemilu_2024")
-        df = pd.DataFrame(dataset['train'])
-        df.to_csv(file_path, index=False)
-        logger.info("Dataset telah diunduh dan disimpan sebagai CSV di:", file_path)
+# def download_dataset(file_path):
+#     # Muat dataset jika belum ada
+#     if not os.path.exists(file_path):
+#         dataset = load_dataset("emkr-13/berita_pemilu_2024")
+#         df = pd.DataFrame(dataset['train'])
+#         df.to_csv(file_path, index=False)
+#         logger.info("Dataset telah diunduh dan disimpan sebagai CSV di:", file_path)
 
-# Path to save CSV file
-file_path = "resource/dataset_pemilu_2024.csv"
+# # Path to save CSV file
+# file_path = "resource/dataset_pemilu_2024.csv"
 
 # Download dataset if not exist
-download_dataset(file_path)
+# download_dataset(file_path)
 
 import streamlit as st
 from home import home_content
